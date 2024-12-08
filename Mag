@@ -3,7 +3,7 @@ local character = player.Character or player.CharacterAdded:Wait()
 
 -- Settings
 local armSize = Vector3.new(5, 50, 5) -- Dimensions for the "tall" arms
-local armTransparency = 1 -- Transparency of the arms
+local armTransparency = 0.7 -- Transparency of the arms
 local armColor = Color3.fromRGB(255, 0, 0) -- Color of the hitbox arms
 local hitboxEnabled = true -- Toggle the hitbox functionality
 
