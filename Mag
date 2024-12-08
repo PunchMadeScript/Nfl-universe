@@ -1,0 +1,55 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Settings
+local armSize = Vector3.new(5, 50, 5) -- Dimensions for the "tall" arms
+local armTransparency = 1 -- Transparency of the arms
+local armColor = Color3.fromRGB(255, 0, 0) -- Color of the hitbox arms
+local hitboxEnabled = true -- Toggle the hitbox functionality
+
+-- Function to modify an arm to be a tall hitbox
+local function makeArmHitbox(arm)
+    if arm and arm:IsA("BasePart") then
+        arm.Size = armSize
+        arm.Transparency = armTransparency
+        arm.BrickColor = BrickColor.new(armColor)
+        arm.Material = Enum.Material.Neon
+        arm.CanCollide = false -- Prevent the arms from blocking movement
+    end
+end
+
+-- Function to enable the hitbox effect
+local function enableHitbox()
+    if character then
+        local leftArm = character:FindFirstChild("Left Arm") or character:FindFirstChild("LeftHand")
+        local rightArm = character:FindFirstChild("Right Arm") or character:FindFirstChild("RightHand")
+
+        -- Modify the arms
+        makeArmHitbox(leftArm)
+        makeArmHitbox(rightArm)
+
+        -- Connect Touched event for each arm
+        if leftArm then
+            leftArm.Touched:Connect(function(hit)
+                if hitboxEnabled and hit:IsA("BasePart") and hit.Parent ~= character then
+                    print("Left arm hit:", hit.Name)
+                end
+            end)
+        end
+
+        if rightArm then
+            rightArm.Touched:Connect(function(hit)
+                if hitboxEnabled and hit:IsA("BasePart") and hit.Parent ~= character then
+                    print("Right arm hit:", hit.Name)
+                end
+            end)
+        end
+    end
+end
+
+-- Ensure the character is loaded and enable the hitbox
+if character then
+    enableHitbox()
+else
+    player.CharacterAdded:Connect(enableHitbox)
+end
