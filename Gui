@@ -43,6 +43,6 @@ local Button = MainTab:CreateButton({
     Name = "Mag",
     Callback = function()
         -- The function that takes place when the button is pressed
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/PunchMadeScript/Mag-hitbox/refs/heads/main/Football"))();
-    end,
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/PunchMadeScript/Nfl-universe/refs/heads/main/Mag?token=GHSAT0AAAAAAC3TXAQQKXQTYVSF4J3ZLQM2Z2VXE2A"))();
+   end,
 })
