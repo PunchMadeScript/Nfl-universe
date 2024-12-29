@@ -33,6 +33,15 @@ local function enableHitbox()
             leftArm.Touched:Connect(function(hit)
                 if hitboxEnabled and hit:IsA("BasePart") and hit.Parent ~= character then
                     print("Left arm hit:", hit.Name)
+                    
+                    -- Fire the event
+                    local args = {
+                        [1] = "Mechanics",
+                        [2] = "Catching",
+                        [3] = true
+                    }
+
+                    game:GetService("ReplicatedStorage").Games:FindFirstChild("6384924a-89ba-4fb3-b5b3-c33a8b377f95").ReEvent:FireServer(unpack(args))
                 end
             end)
         end
@@ -41,6 +50,15 @@ local function enableHitbox()
             rightArm.Touched:Connect(function(hit)
                 if hitboxEnabled and hit:IsA("BasePart") and hit.Parent ~= character then
                     print("Right arm hit:", hit.Name)
+
+                    -- Fire the event
+                    local args = {
+                        [1] = "Mechanics",
+                        [2] = "Catching",
+                        [3] = true
+                    }
+
+                    game:GetService("ReplicatedStorage").Games:FindFirstChild("6384924a-89ba-4fb3-b5b3-c33a8b377f95").ReEvent:FireServer(unpack(args))
                 end
             end)
         end
@@ -53,3 +71,23 @@ if character then
 else
     player.CharacterAdded:Connect(enableHitbox)
 end
+
+-- Monitor transparency and reset if necessary
+game:GetService("RunService").Stepped:Connect(function()
+    if character then
+        local leftArm = character:FindFirstChild("Left Arm") or character:FindFirstChild("LeftHand")
+        local rightArm = character:FindFirstChild("Right Arm") or character:FindFirstChild("RightHand")
+
+        if leftArm then
+            if leftArm.Transparency ~= armTransparency then
+                leftArm.Transparency = armTransparency
+            end
+        end
+
+        if rightArm then
+            if rightArm.Transparency ~= armTransparency then
+                rightArm.Transparency = armTransparency
+            end
+        end
+    end
+end)
